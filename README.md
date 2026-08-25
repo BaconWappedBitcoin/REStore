@@ -26,6 +26,11 @@ npm run build:firefox  # Firefox build -> .output/firefox-mv2
 - Keyboard navigation (j/k next/prev post, etc.)
 - User hover info panels
 
+## Security
+
+- Code scanned with Mimosa (deep, static): **0 findings** in extension source.
+- `npm audit` reports advisories in WXT's **dev-only** dependency chain (`web-ext-run`, `node-notifier`, `uuid`, `tmp`, `firefox-profile`). None of these packages are bundled into the extension — the shipped build (`dist` output) contains only REStore's own code and CSS. Do not run `npm audit fix --force`; it breaks WXT.
+
 ## License
 
 [MIT](./LICENSE)
