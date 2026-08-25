@@ -17,13 +17,13 @@ export function markShVisit(): void {
   });
 }
 
-/** Hides promoted posts, upsell banners, chat widget. CSS handles visibility via <html> classes. */
+/** Hides all ads and sponsored content. CSS is primary (covers late-inserted
+ *  elements); this JS pass also reports removal counts in dev mode. */
 export function applyDomTweaks(hideClutter: boolean): void {
   document.documentElement.classList.toggle('restore-clutter-hidden', hideClutter);
 
-  if (hideClutter) {
-    for (const el of document.querySelectorAll(sel.adPost)) {
-      (el as HTMLElement).style.display = 'none';
-    }
+  if (hideClutter && import.meta.env.DEV) {
+    const ads = document.querySelectorAll(sel.ads).length;
+    if (ads > 0) console.info(`[REStore] hiding ${ads} ad/sponsored element(s)`);
   }
 }

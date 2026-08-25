@@ -7,7 +7,7 @@ const LABELS: Record<keyof Toggles, string> = {
   reskinPosts: 'Classic post rows (title, meta, vote score)',
   reskinComments: 'Classic threaded comments with indent lines',
   reskinHeader: 'Old-style blue header bar',
-  hideClutter: 'Hide promoted posts, upsells, and chat widget',
+  hideClutter: 'Remove all ads and sponsored content (in-feed, sidebar, promoted)',
 };
 
 async function render() {

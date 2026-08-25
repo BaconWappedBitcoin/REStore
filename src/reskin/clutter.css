@@ -1,11 +1,56 @@
-/* REStore clutter hiding: ad posts, promoted posts, upsells, chat */
+/*
+ * REStore ad & sponsored-content removal — priority module.
+ * Selector inventory verified against live shreddit DOM (2026-08):
+ *  - shreddit-ad-post            in-feed display/video ads
+ *  - shreddit-sidebar-ad         right-rail ads
+ *  - shreddit-async-loader[bundlename=sidebar_ad]  sidebar ad loader
+ *  - image-observer[is-promoted] promoted ("sponsored") posts
+ *  - .promoted-label / .promoted-name-container / .ad-link-bar
+ *  - [data-ad-click-location]    ad interior link chrome
+ *  - shreddit-post-overflow-menu[is-ad]
+ * Plus defensive entries for ad variants seen in the wild.
+ * CSS-only so it also covers elements inserted later by infinite scroll.
+ */
 
+/* ---- In-feed ads ---- */
 html.restore-clutter-hidden shreddit-ad-post,
+html.restore-clutter-hidden shreddit-ad,
+html.restore-clutter-hidden shreddit-feed shreddit-ad-post,
+html.restore-clutter-hidden article[data-testid='ad-post'],
 html.restore-clutter-hidden [data-testid='promoted-post'],
+
+/* ---- Sidebar / right-rail ads ---- */
+html.restore-clutter-hidden shreddit-sidebar-ad,
+html.restore-clutter-hidden shreddit-async-loader[bundlename='sidebar_ad'],
+html.restore-clutter-hidden shreddit-async-loader[bundlename*='ad'],
+html.restore-clutter-hidden ad-scheduler,
+html.restore-clutter-hidden aside shreddit-ad-post,
+
+/* ---- Promoted / sponsored content ---- */
+html.restore-clutter-hidden image-observer[is-promoted],
 html.restore-clutter-hidden shreddit-post[promoted='true'],
+html.restore-clutter-hidden .promotedlink,
+html.restore-clutter-hidden .promoted-label,
+html.restore-clutter-hidden .promoted-name-container,
+html.restore-clutter-hidden .ad-link-bar,
+
+/* ---- Ad interior chrome (if an ad shell ever slips through) ---- */
+html.restore-clutter-hidden [data-ad-click-location],
+html.restore-clutter-hidden shreddit-post-overflow-menu[is-ad],
+
+/* ---- Non-ad clutter: upsells, chat ---- */
 html.restore-clutter-hidden #chat,
 html.restore-clutter-hidden [data-testid='chat-widget'],
 html.restore-clutter-hidden [data-testid='upsell'],
 html.restore-clutter-hidden faceplate-banner {
   display: none !important;
+}
+
+/* Collapse space left by removed right-rail ads */
+html.restore-clutter-hidden .right-sidebar shreddit-sidebar-ad,
+html.restore-clutter-hidden .right-sidebar shreddit-async-loader[bundlename='sidebar_ad'] {
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
 }

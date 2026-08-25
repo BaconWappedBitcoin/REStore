@@ -5,6 +5,8 @@
  * stable than generated class names. If Reddit renames something, update it
  * here only. In dev mode (`import.meta.env.DEV`), missing selectors log a
  * console warning so breakage is visible immediately.
+ *
+ * Ad/sponsored selectors were verified against the live DOM on 2026-08-24.
  */
 
 export const sel = {
@@ -16,8 +18,26 @@ export const sel = {
   voteButtons: 'shreddit-post [data-testid="post-vote-button"]',
   header: 'header',
   sidebar: '.right-sidebar, aside.contents',
-  adPost: 'shreddit-ad-post',
-  promoted: '[data-testid="promoted-post"], shreddit-post[promoted="true"]',
+
+  /** All known ad / sponsored-content elements (priority removal targets). */
+  ads: [
+    'shreddit-ad-post',
+    'shreddit-ad',
+    'shreddit-sidebar-ad',
+    'shreddit-async-loader[bundlename="sidebar_ad"]',
+    'shreddit-async-loader[bundlename*="ad"]',
+    'ad-scheduler',
+    'image-observer[is-promoted]',
+    'shreddit-post[promoted="true"]',
+    '.promotedlink',
+    '.promoted-label',
+    '.promoted-name-container',
+    '.ad-link-bar',
+    '[data-ad-click-location]',
+    'shreddit-post-overflow-menu[is-ad]',
+    '[data-testid="promoted-post"]',
+  ].join(', '),
+
   chatWidget: '#chat, [data-testid="chat-widget"]',
   upsell: '[data-testid="upsell"], faceplate-banner',
 } as const;
