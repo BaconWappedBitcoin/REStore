@@ -1,7 +1,7 @@
 import { defineContentScript } from 'wxt/utils/define-content-script';
 import { getToggles, type Toggles } from '../src/modules/toggles';
 import { assertSelectors } from '../src/selectors';
-import { applyDomTweaks, markShVisit } from '../src/modules/domtweaks';
+import { applyDomTweaks } from '../src/modules/domtweaks';
 import { initFilters } from '../src/modules/filters';
 import { initKeyboardNav } from '../src/modules/keyboardNav';
 import { initPageNavigator } from '../src/modules/pageNavigator';
@@ -9,7 +9,6 @@ import { initAutoHide, watchReads } from '../src/modules/autoHide';
 import { initCommentFeatures } from '../src/modules/comments';
 import { initClassicRows } from '../src/modules/classicRows';
 import { initChrome } from '../src/modules/chrome';
-import { initLinkRewriter } from '../src/modules/linkRewriter';
 
 import '../src/reskin/base.css';
 import '../src/reskin/layout.css';
@@ -45,12 +44,10 @@ function apply(t: Toggles) {
 }
 
 export default defineContentScript({
-  matches: ['*://sh.reddit.com/*'],
+  matches: ['*://sh.reddit.com/*', '*://www.reddit.com/*'],
   runAt: 'document_start',
   main() {
-    markShVisit();
     watchReads();
-    initLinkRewriter();
     void getToggles().then(apply);
 
     // Live re-apply when toggles change in the options page

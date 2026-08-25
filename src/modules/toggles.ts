@@ -5,7 +5,6 @@
  */
 
 export interface Toggles {
-  redirect: boolean;
   reskinBase: boolean;
   reskinLayout: boolean;
   reskinPosts: boolean;
@@ -25,7 +24,6 @@ export interface Toggles {
 }
 
 export const DEFAULT_TOGGLES: Toggles = {
-  redirect: true,
   reskinBase: true,
   reskinLayout: true,
   reskinPosts: true,

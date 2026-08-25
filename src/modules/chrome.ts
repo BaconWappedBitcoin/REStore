@@ -38,22 +38,22 @@ function buildHeader(): HTMLElement {
 
   const logo = document.createElement('a');
   logo.id = 'restore-logo';
-  logo.href = 'https://sh.reddit.com/';
+  logo.href = '/';
   logo.textContent = 'reddit';
 
   const home = document.createElement('a');
   home.className = 'restore-navlink';
-  home.href = 'https://sh.reddit.com/';
+  home.href = '/';
   home.textContent = 'HOME';
 
   const popular = document.createElement('a');
   popular.className = 'restore-navlink';
-  popular.href = 'https://sh.reddit.com/r/popular/';
+  popular.href = '/r/popular/';
   popular.textContent = 'POPULAR';
 
   const all = document.createElement('a');
   all.className = 'restore-navlink';
-  all.href = 'https://sh.reddit.com/r/all/';
+  all.href = '/r/all/';
   all.textContent = 'ALL';
 
   const search = document.createElement('form');

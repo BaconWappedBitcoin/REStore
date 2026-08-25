@@ -11,7 +11,6 @@ import {
 } from '../../src/modules/settings';
 
 const TOGGLE_LABELS: Record<keyof Toggles, string> = {
-  redirect: 'Always redirect www/new/old.reddit.com to sh.reddit.com',
   reskinBase: 'Old-Reddit colors and typography',
   reskinLayout: 'Centered fixed-width layout with compact list',
   reskinPosts: 'Classic post rows (title, meta, vote score)',

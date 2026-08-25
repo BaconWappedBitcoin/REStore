@@ -52,16 +52,13 @@ export function extractMeta(article: HTMLElement): PostMeta {
   );
   const title = titleEl?.textContent?.trim() ?? '';
 
-  // Use the raw attribute and rebase on sh.reddit.com — .href would
-  // absolutize to whatever host the page rendered (often www).
+  // Use the raw attribute and rebase on the CURRENT host — links should stay
+  // on whichever Reddit host (sh/www) the user is browsing.
   let linkUrl = '';
   const rawHref = titleEl?.getAttribute('href') ?? '';
   if (rawHref) {
     try {
-      linkUrl = new URL(rawHref, 'https://sh.reddit.com').toString();
-      if (linkUrl.includes('//www.reddit.com') || linkUrl.includes('//new.reddit.com')) {
-        linkUrl = linkUrl.replace(/\/\/(www|new)\.reddit\.com/, '//sh.reddit.com');
-      }
+      linkUrl = new URL(rawHref, location.origin).toString();
     } catch {
       linkUrl = rawHref;
     }
