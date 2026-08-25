@@ -41,7 +41,7 @@ function syncVoteUi(article: HTMLElement): void {
   const downVoted = down?.getAttribute('aria-pressed') === 'true';
   row.querySelector('.restore-up')?.classList.toggle('voted', upVoted);
   row.querySelector('.restore-down')?.classList.toggle('voted', downVoted);
-  const scoreEl = row.querySelector('.restore-score');
+  const scoreEl = row.querySelector('.restore-score') as HTMLElement | null;
   if (scoreEl && scoreEl.dataset.base) {
     const base = Number(scoreEl.dataset.base);
     if (Number.isFinite(base)) {
