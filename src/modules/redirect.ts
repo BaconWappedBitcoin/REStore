@@ -1,9 +1,11 @@
 /**
  * Redirects www/new/old.reddit.com -> sh.reddit.com, preserving path + query.
  *
- * - Chrome: declarativeNetRequest dynamic rules (registered in background.ts).
- * - Firefox: webRequestBlocking listener (registered in background.ts),
- *   used when DNR is unavailable.
+ * Loop guard (logged-out Reddit 301s sh->www server-side, which would ping-pong
+ * with our rule): DNR rules are only armed after the content script reports a
+ * successful sh.reddit.com load this session (storage.session `shVisitSeen`),
+ * and are disarmed for the rest of the session if Chrome reports
+ * ERR_TOO_MANY_REDIRECTS on a Reddit main-frame navigation.
  */
 
 const OTHER_HOSTS = ['www.reddit.com', 'new.reddit.com', 'old.reddit.com'];
@@ -22,31 +24,30 @@ export function toShReddit(url: string): string | null {
 }
 
 /** Minimal shapes of the declarativeNetRequest API we use. */
-interface DnrTransform {
-  host: string;
-  scheme: string;
-}
 interface DnrAction {
   type: 'redirect';
-  transform: DnrTransform;
-}
-interface DnrCondition {
-  requestDomains: string[];
-  resourceTypes: string[];
+  redirect: { transform: { host: string; scheme: string } };
 }
 export interface DnrRule {
   id: number;
   priority: number;
   action: DnrAction;
-  condition: DnrCondition;
+  condition: { requestDomains: string[]; resourceTypes: string[] };
 }
+
+export const DNR_RULE_IDS = [1001, 1002, 1003];
 
 /** DNR rule specs for redirecting all non-sh Reddit hosts to sh.reddit.com. */
 export function dnrRules(ruleIds: number[]): DnrRule[] {
   return OTHER_HOSTS.map((host, i) => ({
     id: ruleIds[i],
     priority: 1,
-    action: { type: 'redirect', transform: { host: 'sh.reddit.com', scheme: 'https' } },
+    action: {
+      type: 'redirect',
+      redirect: { transform: { host: 'sh.reddit.com', scheme: 'https' } },
+    },
     condition: { requestDomains: [host], resourceTypes: ['main_frame'] },
   }));
 }
+
+export const LOOP_ERROR = 'net::ERR_TOO_MANY_REDIRECTS';

@@ -16,7 +16,7 @@ export default defineConfig({
     permissions: [
       'storage',
       // Chrome: network-level redirect of www/old/new reddit -> sh.reddit.com
-      ...(browser === 'chrome' ? ['declarativeNetRequest'] : []),
+      ...(browser === 'chrome' ? ['declarativeNetRequest', 'webRequest'] : []),
       // Firefox: we redirect from a lightweight listener instead
       ...(browser === 'firefox' ? ['webRequest', 'webRequestBlocking'] : []),
     ],
