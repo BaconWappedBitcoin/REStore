@@ -1,15 +1,30 @@
 /* REStore posts: classic compact post rows (rank/votes/thumbnail/title/meta) */
 
+html[data-restore-posts='on'] shreddit-feed > article {
+  display: block;
+  background: var(--restore-bg);
+  border: 1px solid var(--restore-border);
+  margin-bottom: 4px;
+  padding: 4px 8px;
+}
+
+/* shreddit wraps each post in an <hr>; old Reddit has no card separators */
+html[data-restore-posts='on'] shreddit-feed > hr {
+  display: none;
+}
+
 html[data-restore-posts='on'] shreddit-post h1,
 html[data-restore-posts='on'] shreddit-post [slot='title'] a,
 html[data-restore-posts='on'] shreddit-post a[slot='full-post-link'],
-html[data-restore-posts='on'] shreddit-post a[data-testid='post-title'] {
+html[data-restore-posts='on'] shreddit-post a[data-testid='post-title'],
+html[data-restore-posts='on'] shreddit-feed > article a[slot='title'] {
   font-size: 16px;
   font-weight: normal;
   color: var(--restore-blue);
 }
 
-html[data-restore-posts='on'] shreddit-post a[data-testid='post-title']:visited {
+html[data-restore-posts='on'] shreddit-post a[data-testid='post-title']:visited,
+html[data-restore-posts='on'] shreddit-feed > article a[slot='title']:visited {
   color: var(--restore-visited);
 }
 

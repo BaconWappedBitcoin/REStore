@@ -22,7 +22,7 @@ export function applyDomTweaks(hideClutter: boolean): void {
   document.documentElement.classList.toggle('restore-clutter-hidden', hideClutter);
 
   if (hideClutter) {
-    for (const el of document.querySelectorAll(sel.promoted)) {
+    for (const el of document.querySelectorAll(sel.adPost)) {
       (el as HTMLElement).style.display = 'none';
     }
   }

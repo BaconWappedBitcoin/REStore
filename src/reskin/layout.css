@@ -19,8 +19,9 @@ html[data-restore-layout='on'] shreddit-post {
 }
 
 /* Sidebar: narrow right rail */
-html[data-restore-layout='on'] aside,
-html[data-restore-layout='on'] [data-testid='sidebar-container'] {
+html[data-restore-layout='on'] .right-sidebar,
+html[data-restore-layout='on'] aside.contents,
+html[data-restore-layout='on'] aside[data-testid='sidebar-container'] {
   max-width: 300px;
   background: var(--restore-bg);
   border: 1px solid var(--restore-border);

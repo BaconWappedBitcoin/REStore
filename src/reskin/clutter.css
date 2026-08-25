@@ -1,5 +1,6 @@
-/* REStore clutter hiding: promoted posts, upsells, chat */
+/* REStore clutter hiding: ad posts, promoted posts, upsells, chat */
 
+html.restore-clutter-hidden shreddit-ad-post,
 html.restore-clutter-hidden [data-testid='promoted-post'],
 html.restore-clutter-hidden shreddit-post[promoted='true'],
 html.restore-clutter-hidden #chat,
