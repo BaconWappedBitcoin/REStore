@@ -21,6 +21,8 @@ export interface Toggles {
   nightMode: boolean;
   classicRows: boolean;
   classicChrome: boolean;
+  userTagger: boolean;
+  subTags: boolean;
 }
 
 export const DEFAULT_TOGGLES: Toggles = {
@@ -40,6 +42,8 @@ export const DEFAULT_TOGGLES: Toggles = {
   nightMode: true,
   classicRows: true,
   classicChrome: true,
+  userTagger: true,
+  subTags: true,
 };
 
 export async function getToggles(): Promise<Toggles> {

@@ -7,8 +7,9 @@ import { initKeyboardNav } from '../src/modules/keyboardNav';
 import { initPageNavigator } from '../src/modules/pageNavigator';
 import { initAutoHide, watchReads } from '../src/modules/autoHide';
 import { initCommentFeatures } from '../src/modules/comments';
-import { initClassicRows } from '../src/modules/classicRows';
+import { initClassicRows, applySubTags } from '../src/modules/classicRows';
 import { initChrome } from '../src/modules/chrome';
+import { initUserTagger } from '../src/modules/userTagger';
 
 import '../src/reskin/base.css';
 import '../src/reskin/layout.css';
@@ -36,6 +37,8 @@ function apply(t: Toggles) {
   initAutoHide(t.autoHide);
   initClassicRows(t.classicRows);
   initChrome(t.classicChrome);
+  initUserTagger(t.userTagger);
+  applySubTags(t.subTags);
   initCommentFeatures({
     userHighlight: t.userHighlight,
     quickCollapse: t.quickCollapse,

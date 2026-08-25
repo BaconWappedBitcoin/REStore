@@ -27,7 +27,40 @@ const TOGGLE_LABELS: Record<keyof Toggles, string> = {
   nightMode: 'Night mode (dark classic theme — off = classic light)',
   classicRows: 'Classic rows: render true old-Reddit post rows (rank, votes, thumbnail, buttons)',
   classicChrome: 'Classic chrome: old-Reddit header bar, sort tabs, and left sidebar',
+  userTagger: 'User tags: Alt+click a username to tag them (colored chip)',
+  subTags: 'Color-code the r/subreddit tag in each row',
 };
+
+async function renderTags() {
+  const box = document.getElementById('tags');
+  if (!box) return;
+  box.innerHTML = '';
+  const { getAllTags } = await import('../../src/modules/userTagger');
+  const tags = await getAllTags();
+  const entries = Object.entries(tags);
+  if (!entries.length) {
+    box.textContent = 'No tags yet — Alt+click a username on Reddit to add one.';
+    return;
+  }
+  for (const [name, t] of entries) {
+    const row = document.createElement('div');
+    const chip = document.createElement('span');
+    chip.textContent = t.tag;
+    chip.style.color = t.color || '#369';
+    chip.style.fontWeight = 'bold';
+    const user = document.createElement('span');
+    user.textContent = ' u/' + name;
+    const del = document.createElement('button');
+    del.textContent = 'delete';
+    del.addEventListener('click', async () => {
+      const { deleteTag } = await import('../../src/modules/userTagger');
+      await deleteTag(name);
+      void renderTags();
+    });
+    row.append(chip, user, ' ', del);
+    box.append(row);
+  }
+}
 
 const FILTER_FIELDS: { key: keyof FilterSettings; label: string; placeholder: string }[] = [
   {
@@ -84,6 +117,13 @@ async function render() {
   }
 
   root.append(box, fbox);
+
+  const tagHead = document.createElement('h2');
+  tagHead.textContent = 'User tags';
+  const tagBox = document.createElement('div');
+  tagBox.id = 'tags';
+  root.append(tagHead, tagBox);
+  void renderTags();
 }
 
 void render();

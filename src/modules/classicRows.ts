@@ -170,3 +170,30 @@ export function initClassicRows(enabled: boolean): void {
     }
   });
 }
+
+/* ---------------- subRedditTagger: deterministic colored subreddit tags ---- */
+
+const SUB_PALETTE = ['#c00', '#080', '#0055df', '#60c', '#c26a09', '#099', '#906', '#660'];
+
+function colorOf(name: string): string {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+  return SUB_PALETTE[h % SUB_PALETTE.length];
+}
+
+/** Colors the r/sub link in each row's tagline with a stable per-sub color. */
+export function applySubTags(on: boolean): void {
+  const apply = () => {
+    for (const a of document.querySelectorAll<HTMLAnchorElement>(
+      '.restore-row .restore-tagline a[href^="/r/"]',
+    )) {
+      if (on) {
+        a.style.color = colorOf(a.textContent ?? '');
+      } else {
+        a.style.color = '';
+      }
+    }
+  };
+  apply();
+  onFeedScan(apply);
+}
