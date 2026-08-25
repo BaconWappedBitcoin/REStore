@@ -6,7 +6,7 @@ import { initFilters } from '../src/modules/filters';
 import { initKeyboardNav } from '../src/modules/keyboardNav';
 import { initPageNavigator } from '../src/modules/pageNavigator';
 import { initAutoHide, watchReads } from '../src/modules/autoHide';
-import { initCommentFeatures } from '../src/modules/comments';
+import { initCommentFeatures, trackNewComments } from '../src/modules/comments';
 import { initClassicRows, applySubTags } from '../src/modules/classicRows';
 import { initChrome } from '../src/modules/chrome';
 import { initUserTagger } from '../src/modules/userTagger';
@@ -44,6 +44,7 @@ function apply(t: Toggles) {
     quickCollapse: t.quickCollapse,
     collapsePersist: t.collapsePersist,
   });
+  trackNewComments();
 }
 
 export default defineContentScript({

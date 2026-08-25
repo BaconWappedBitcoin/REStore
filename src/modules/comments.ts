@@ -99,6 +99,42 @@ function restoreCollapsed(): void {
   }
 }
 
+/* ---------------- newCommentCount: "N new comments since last visit" ------- */
+
+const COUNTS_KEY = 'restore-thread-counts';
+const COUNTS_CAP = 1000;
+
+interface ThreadCount {
+  count: number;
+  ts: number;
+}
+
+export function trackNewComments(): void {
+  const tree = document.querySelector('shreddit-comment-tree');
+  if (!tree) return;
+  const postId = tree.getAttribute('post-id') ?? '';
+  const total = Number(tree.getAttribute('totalcomments') ?? '');
+  if (!postId || !Number.isFinite(total)) return;
+
+  void browser.storage.local.get(COUNTS_KEY).then(async (o) => {
+    const map = (o[COUNTS_KEY] as Record<string, ThreadCount>) ?? {};
+    const prev = map[postId];
+    if (prev && total > prev.count) {
+      const banner = document.createElement('div');
+      banner.id = 'restore-new-comments';
+      banner.textContent = `${total - prev.count} new comment${total - prev.count === 1 ? '' : 's'} since your last visit`;
+      tree.parentElement?.insertBefore(banner, tree);
+    }
+    map[postId] = { count: total, ts: Date.now() };
+    const keys = Object.keys(map);
+    if (keys.length > COUNTS_CAP) {
+      keys.sort((a, b) => map[a].ts - map[b].ts);
+      for (const k of keys.slice(0, keys.length - COUNTS_CAP)) delete map[k];
+    }
+    await browser.storage.local.set({ [COUNTS_KEY]: map });
+  });
+}
+
 /* ---------------- wiring ---------------- */
 
 let observer: MutationObserver | null = null;

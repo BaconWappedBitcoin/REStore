@@ -12,7 +12,7 @@ export default defineConfig({
     name: 'REStore',
     description:
       'Restores the old Reddit look on sh.reddit.com and www.reddit.com.',
-    version: '0.3.1',
+    version: '0.4.0',
     permissions: ['storage'],
     host_permissions: ['*://*.reddit.com/*'],
     options_ui: {

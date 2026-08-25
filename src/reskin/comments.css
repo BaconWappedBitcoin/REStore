@@ -1,25 +1,95 @@
-/* REStore comments: classic threaded comments with indent border lines */
+/* REStore comments — classic old-Reddit thread styling.
+   Native DOM is kept (summary collapses, voting/replies stay functional);
+   we restyle: boxed thread area, bold blue author meta, no avatars,
+   grey action row, threadline indents. */
 
-html[data-restore-comments='on'] shreddit-comment {
-  border-left: 1px solid #d0d0d0;
-  margin-left: 12px;
-  padding-left: 12px;
+/* The whole thread sits in one bordered box under the post */
+html[data-restore-comments='on'] shreddit-comment-tree {
+  background: var(--restore-bg) !important;
+  border: 1px solid var(--restore-border);
+  border-radius: 4px;
+  padding: 8px 12px !important;
 }
 
-html[data-restore-comments='on'] shreddit-comment [data-testid='comment-author'],
-html[data-restore-comments='on'] shreddit-comment a[href^='/user/'] {
+/* old Reddit has no avatars */
+html[data-restore-comments='on'] shreddit-comment div[slot='commentAvatar'] {
+  display: none !important;
+}
+
+/* summary is the collapse toggle: pointer, no disclosure triangle */
+html[data-restore-comments='on'] shreddit-comment details summary {
+  cursor: pointer;
+  list-style: none;
+}
+html[data-restore-comments='on'] shreddit-comment details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* author meta line: small bold blue author, grey points/time */
+html[data-restore-comments='on'] shreddit-comment div[slot='commentMeta'],
+html[data-restore-comments='on'] shreddit-comment div[slot='commentMeta'] * {
+  font-size: 11px !important;
+  font-weight: 700;
+  color: #6299c6 !important;
+  line-height: 1.3;
+}
+html[data-restore-comments='on'] shreddit-comment div[slot='commentMeta'] span,
+html[data-restore-comments='on'] shreddit-comment div[slot='commentMeta'] time {
+  color: var(--restore-meta) !important;
+  font-weight: 400;
+}
+
+/* comment body */
+html[data-restore-comments='on'] shreddit-comment div[slot='comment'] p,
+html[data-restore-comments='on'] shreddit-comment div[slot='comment'] li {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  color: var(--restore-text);
+}
+
+/* action row (reply/share/save): small grey text buttons */
+html[data-restore-comments='on'] shreddit-comment div[slot='actionRow'] button,
+html[data-restore-comments='on'] shreddit-comment div[slot='actionRow'] a {
+  font-size: 10px !important;
+  font-weight: 700;
+  color: var(--restore-btn) !important;
+  background: transparent !important;
+  border: none !important;
+  text-transform: lowercase;
+  padding: 0 6px 0 0;
+}
+
+/* threadline indents for nested replies */
+html[data-restore-comments='on'] shreddit-comment {
+  border-left: 1px solid var(--restore-border);
+  margin-left: 12px;
+  padding-left: 10px;
+}
+html[data-restore-comments='on'] shreddit-comment > details {
+  margin-left: 0;
+}
+
+/* newCommentCount banner */
+#restore-new-comments {
+  background: var(--restore-row-alt);
+  color: var(--restore-score);
+  border: 1px solid var(--restore-border);
+  border-radius: 4px;
+  padding: 6px 10px;
   font-size: 11px;
   font-weight: bold;
-  color: #336699;
+  margin-bottom: 8px;
 }
 
-html[data-restore-comments='on'] shreddit-comment p {
-  font-size: 13px;
-  line-height: 1.5;
+/* permalink post header: compact classic banner instead of big card */
+html[data-restore-posts='on'] shreddit-post.permalink {
+  background: var(--restore-bg) !important;
+  border: 1px solid var(--restore-border);
+  border-radius: 4px;
+  padding: 8px;
 }
-
-/* Collapse/expand affordance look */
-html[data-restore-comments='on'] shreddit-comment [data-testid='comment-collapse'] {
-  color: var(--restore-meta);
-  font-size: 11px;
+html[data-restore-posts='on'] shreddit-post.permalink h1,
+html[data-restore-posts='on'] shreddit-post.permalink [slot='title'] {
+  font-size: 18px;
+  color: var(--restore-link);
 }
