@@ -12,9 +12,10 @@
  * CSS-only so it also covers elements inserted later by infinite scroll.
  */
 
-/* ---- In-feed ads ---- */
+/* ---- In-feed & in-comment ads ---- */
 html.restore-clutter-hidden shreddit-ad-post,
 html.restore-clutter-hidden shreddit-ad,
+html.restore-clutter-hidden shreddit-comment-tree-ad,
 html.restore-clutter-hidden shreddit-feed shreddit-ad-post,
 html.restore-clutter-hidden article[data-testid='ad-post'],
 html.restore-clutter-hidden [data-testid='promoted-post'],

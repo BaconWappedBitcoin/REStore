@@ -6,6 +6,7 @@ import { initFilters } from '../src/modules/filters';
 import { initKeyboardNav } from '../src/modules/keyboardNav';
 import { initPageNavigator } from '../src/modules/pageNavigator';
 import { initAutoHide, watchReads } from '../src/modules/autoHide';
+import { initCommentFeatures } from '../src/modules/comments';
 
 import '../src/reskin/base.css';
 import '../src/reskin/layout.css';
@@ -27,6 +28,11 @@ function apply(t: Toggles) {
   initKeyboardNav(t.keyboardNav);
   initPageNavigator(t.pageNavigator);
   initAutoHide(t.autoHide);
+  initCommentFeatures({
+    userHighlight: t.userHighlight,
+    quickCollapse: t.quickCollapse,
+    collapsePersist: t.collapsePersist,
+  });
 }
 
 export default defineContentScript({

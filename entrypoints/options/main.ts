@@ -22,6 +22,9 @@ const TOGGLE_LABELS: Record<keyof Toggles, string> = {
   keyboardNav: 'Keyboard navigation (j/k select, Enter open, c comments, h hide)',
   pageNavigator: 'Floating back-to-top / jump-to-bottom buttons',
   autoHide: 'Hide posts I have already opened',
+  userHighlight: 'Highlight the OP in blue (and yourself in orange) in comments',
+  quickCollapse: 'Click a comment\'s left gutter to collapse the thread',
+  collapsePersist: 'Remember collapsed comment threads across visits',
 };
 
 const FILTER_FIELDS: { key: keyof FilterSettings; label: string; placeholder: string }[] = [

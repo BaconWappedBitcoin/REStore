@@ -38,3 +38,20 @@
 #restore-pagenav button:hover {
   background: #f4f8fc;
 }
+
+/* userHighlight — RES palette: OP blue, self orange */
+.restore-op-comment a[href^='/user/'],
+.restore-op-comment a[href*='reddit.com/user/'] {
+  color: #0055df !important;
+  font-weight: bold;
+}
+.restore-self-comment a[href^='/user/'],
+.restore-self-comment a[href*='reddit.com/user/'] {
+  color: #c26a09 !important;
+  font-weight: bold;
+}
+
+/* commentQuickCollapse — gutter affordance */
+shreddit-comment {
+  cursor: default;
+}

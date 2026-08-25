@@ -16,6 +16,9 @@ export interface Toggles {
   keyboardNav: boolean;
   pageNavigator: boolean;
   autoHide: boolean;
+  userHighlight: boolean;
+  quickCollapse: boolean;
+  collapsePersist: boolean;
 }
 
 export const DEFAULT_TOGGLES: Toggles = {
@@ -30,6 +33,9 @@ export const DEFAULT_TOGGLES: Toggles = {
   keyboardNav: true,
   pageNavigator: true,
   autoHide: true,
+  userHighlight: true,
+  quickCollapse: true,
+  collapsePersist: true,
 };
 
 export async function getToggles(): Promise<Toggles> {

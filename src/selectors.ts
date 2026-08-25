@@ -24,6 +24,7 @@ export const sel = {
     'shreddit-ad-post',
     'shreddit-ad',
     'shreddit-sidebar-ad',
+    'shreddit-comment-tree-ad',
     'shreddit-async-loader[bundlename="sidebar_ad"]',
     'shreddit-async-loader[bundlename*="ad"]',
     'ad-scheduler',
