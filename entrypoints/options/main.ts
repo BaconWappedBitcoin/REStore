@@ -26,6 +26,7 @@ const TOGGLE_LABELS: Record<keyof Toggles, string> = {
   quickCollapse: 'Click a comment\'s left gutter to collapse the thread',
   collapsePersist: 'Remember collapsed comment threads across visits',
   nightMode: 'Night mode (dark classic theme — off = classic light)',
+  classicRows: 'Classic rows: render true old-Reddit post rows (rank, votes, thumbnail, buttons)',
 };
 
 const FILTER_FIELDS: { key: keyof FilterSettings; label: string; placeholder: string }[] = [

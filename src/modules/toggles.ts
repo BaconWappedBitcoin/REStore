@@ -20,6 +20,7 @@ export interface Toggles {
   quickCollapse: boolean;
   collapsePersist: boolean;
   nightMode: boolean;
+  classicRows: boolean;
 }
 
 export const DEFAULT_TOGGLES: Toggles = {
@@ -38,6 +39,7 @@ export const DEFAULT_TOGGLES: Toggles = {
   quickCollapse: true,
   collapsePersist: true,
   nightMode: true,
+  classicRows: true,
 };
 
 export async function getToggles(): Promise<Toggles> {

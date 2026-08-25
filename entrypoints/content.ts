@@ -7,6 +7,7 @@ import { initKeyboardNav } from '../src/modules/keyboardNav';
 import { initPageNavigator } from '../src/modules/pageNavigator';
 import { initAutoHide, watchReads } from '../src/modules/autoHide';
 import { initCommentFeatures } from '../src/modules/comments';
+import { initClassicRows } from '../src/modules/classicRows';
 
 import '../src/reskin/base.css';
 import '../src/reskin/layout.css';
@@ -14,6 +15,7 @@ import '../src/reskin/posts.css';
 import '../src/reskin/comments.css';
 import '../src/reskin/header.css';
 import '../src/reskin/clutter.css';
+import '../src/reskin/classic-rows.css';
 import '../src/reskin/modules.css';
 
 function apply(t: Toggles) {
@@ -29,6 +31,7 @@ function apply(t: Toggles) {
   initKeyboardNav(t.keyboardNav);
   initPageNavigator(t.pageNavigator);
   initAutoHide(t.autoHide);
+  initClassicRows(t.classicRows);
   initCommentFeatures({
     userHighlight: t.userHighlight,
     quickCollapse: t.quickCollapse,
