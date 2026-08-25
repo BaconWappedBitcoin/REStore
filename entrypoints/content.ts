@@ -23,6 +23,7 @@ function apply(t: Toggles) {
   root.dataset.restorePosts = t.reskinPosts ? 'on' : 'off';
   root.dataset.restoreComments = t.reskinComments ? 'on' : 'off';
   root.dataset.restoreHeader = t.reskinHeader ? 'on' : 'off';
+  root.dataset.restoreTheme = t.nightMode ? 'dark' : 'light';
   applyDomTweaks(t.hideClutter);
   initFilters(t.filterReddit);
   initKeyboardNav(t.keyboardNav);

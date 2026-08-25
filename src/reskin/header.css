@@ -1,22 +1,44 @@
-/* REStore header: old-style blue top bar with subreddit bar */
+/* REStore header — old-Reddit top bars:
+   header row (logo/search/user), then subreddit bar with sort tabs. */
 
-html[data-restore-header='on'] reddit-header,
-html[data-restore-header='on'] faceplate-header,
-html[data-restore-header='on'] header {
+html[data-restore-header='on'] header,
+html[data-restore-header='on'] reddit-header-large {
   background: var(--restore-header-bg) !important;
-  border-bottom: 1px solid #afcae1;
+  border-bottom: 1px solid var(--restore-header-border);
+  color: var(--restore-text);
 }
 
-html[data-restore-header='on'] reddit-header a,
-html[data-restore-header='on'] faceplate-header a,
-html[data-restore-header='on'] header a {
-  color: #369;
-  font-size: 12px;
+html[data-restore-header='on'] header a,
+html[data-restore-header='on'] reddit-header-large a {
+  color: var(--restore-link);
+  font-size: 11px;
   text-decoration: none;
 }
 
-/* Logo + "REStore active" indicator */
-html[data-restore-header='on'] header nav {
-  max-width: var(--restore-content-width);
-  margin: 0 auto;
+/* Subreddit/sort bar */
+html[data-restore-header='on'] nav,
+html[data-restore-header='on'] shreddit-feed + hr + div,
+html[data-restore-header='on'] [data-testid='sort-bar'] {
+  background: var(--restore-subbar-bg);
+}
+
+/* Sort tabs (hot/new/top): small caps style row under header */
+html[data-restore-posts='on'] [data-testid='sort'] a,
+html[data-restore-posts='on'] shreddit-sort a,
+html[data-restore-posts='on'] a[data-testid='sort-option'] {
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--restore-tab-text);
+  padding: 2px 6px;
+}
+
+/* pageNavigator + selection recolor for both themes */
+html[data-restore-theme='dark'] #restore-pagenav button {
+  background: #2d2d2d;
+  border-color: #444;
+  color: var(--restore-tab-text);
+}
+html[data-restore-theme='dark'] .restore-selected {
+  outline-color: #5f99cf;
+  background: #26272a !important;
 }

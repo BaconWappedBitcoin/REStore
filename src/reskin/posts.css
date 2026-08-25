@@ -1,52 +1,146 @@
-/* REStore posts: classic compact post rows (rank/votes/thumbnail/title/meta) */
+/* REStore posts — old-Reddit link-list row anatomy:
+   rank | vote column | thumbnail | title+meta+buttons. Rows separated by
+   thin bottom rules; mid grey meta line; small action-button row. */
 
+/* Rank numbers via CSS counters (shreddit has no rank in the DOM) */
+html[data-restore-posts='on'] shreddit-feed {
+  counter-reset: restore-rank;
+}
 html[data-restore-posts='on'] shreddit-feed > article {
-  display: block;
+  counter-increment: restore-rank;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 5px 8px 5px 34px;
   background: var(--restore-bg);
-  border: 1px solid var(--restore-border);
-  margin-bottom: 4px;
-  padding: 4px 8px;
+  border: none;
+  border-bottom: 1px solid var(--restore-border);
+  margin: 0;
+  overflow: visible;
+  font-size: 12px;
+}
+html[data-restore-posts='on'] shreddit-feed > article::before {
+  content: counter(restore-rank);
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  width: 22px;
+  text-align: right;
+  color: var(--restore-meta);
+  font-size: 14px;
 }
 
-/* shreddit wraps each post in an <hr>; old Reddit has no card separators */
 html[data-restore-posts='on'] shreddit-feed > hr {
   display: none;
 }
 
-html[data-restore-posts='on'] shreddit-post h1,
-html[data-restore-posts='on'] shreddit-post [slot='title'] a,
-html[data-restore-posts='on'] shreddit-post a[slot='full-post-link'],
-html[data-restore-posts='on'] shreddit-post a[data-testid='post-title'],
-html[data-restore-posts='on'] shreddit-feed > article a[slot='title'] {
+/* Title: medium blue, 16-18px */
+html[data-restore-posts='on'] shreddit-feed > article a[slot='title'],
+html[data-restore-posts='on'] shreddit-feed > article a[data-testid='post-title'],
+html[data-restore-posts='on'] shreddit-post a[slot='full-post-link'] {
   font-size: 16px;
   font-weight: normal;
-  color: var(--restore-blue);
+  color: var(--restore-link);
+  background: transparent;
 }
-
-html[data-restore-posts='on'] shreddit-post a[data-testid='post-title']:visited,
 html[data-restore-posts='on'] shreddit-feed > article a[slot='title']:visited {
-  color: var(--restore-visited);
+  color: var(--restore-link-visited);
 }
 
-/* Meta line: submitted by X in Y • N comments — smaller, grey */
-html[data-restore-posts='on'] shreddit-post [data-testid='post-meta'],
-html[data-restore-posts='on'] shreddit-post div:has(> a[href^='/user/']) {
-  font-size: 11px;
+/* Domain after title in small grey parens */
+html[data-restore-posts='on'] shreddit-feed > article a[data-testid='post-domain'],
+html[data-restore-posts='on'] shreddit-feed > article [data-testid='post-domain'] {
+  font-size: 10px;
   color: var(--restore-meta);
 }
 
-/* Classic blue vote score */
-html[data-restore-posts='on'] shreddit-post [data-testid='post-score'],
-html[data-restore-posts='on'] shreddit-post faceplate-number {
-  font-size: 12px;
-  font-weight: bold;
-  color: #ff4500;
+/* Meta line: submitted X ago by USER to r/SUB — small, grey-green */
+html[data-restore-posts='on'] shreddit-feed > article [data-testid='post-meta'],
+html[data-restore-posts='on'] shreddit-feed > article div:has(> a[href^='/user/']) {
+  font-size: 10px;
+  color: var(--restore-meta);
 }
 
-/* Compact media inside the list */
-html[data-restore-posts='on'] shreddit-post img,
-html[data-restore-posts='on'] shreddit-post video {
-  max-height: 320px;
+/* Vote score — orange, centered under arrows */
+html[data-restore-posts='on'] shreddit-feed > article [data-testid='post-score'],
+html[data-restore-posts='on'] shreddit-feed > article faceplate-number {
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--restore-score);
+}
+
+/* Action buttons row: save/hide/report — small grey buttons */
+html[data-restore-posts='on'] shreddit-feed > article li button,
+html[data-restore-posts='on'] shreddit-feed > article [data-testid='post-action-bar'] a,
+html[data-restore-posts='on'] shreddit-feed > article button:is([aria-label*='comment'], [aria-label*='Save']) {
+  font-size: 10px;
+  color: var(--restore-btn);
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  padding: 0 4px 0 0;
+  text-transform: lowercase;
+}
+
+/* Media wrapper anchor: shreddit-post's direct <a> renders full-size previews;
+   cap it to old-Reddit thumbnail scale (media may sit in shadow DOM below it,
+   so the host anchor is what we constrain). */
+html[data-restore-posts='on'] shreddit-feed article shreddit-post > a {
+  display: block;
+  max-height: 80px;
+  max-width: 120px;
+  overflow: hidden;
+}
+
+/* Gallery/carousel preview divs render as big square panes; cap like thumbnails */
+html[data-restore-posts='on'] shreddit-feed article shreddit-post div:has(img),
+html[data-restore-posts='on'] shreddit-feed article shreddit-post div:has(video) {
+  max-height: 80px;
+  max-width: 120px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/* Compact media — old Reddit shows ~70px thumbnails in listings, not inline players */
+html[data-restore-posts='on'] shreddit-feed > article img,
+html[data-restore-posts='on'] shreddit-feed > article video {
+  max-height: 70px;
+  max-width: 90px;
   width: auto;
-  max-width: 100%;
+  object-fit: cover;
+  border-radius: 0 !important;
+}
+
+/* Kill all card chrome: rounded corners, shadows, fills */
+html[data-restore-posts='on'] shreddit-feed > article,
+html[data-restore-posts='on'] shreddit-feed > article * {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Every button in a row becomes small bold grey text (save/hide/share/join) */
+html[data-restore-posts='on'] shreddit-feed > article button {
+  background: transparent !important;
+  border: none !important;
+  color: var(--restore-btn) !important;
+  font-weight: bold;
+  font-size: 10px;
+  padding: 0 6px 0 0;
+  min-height: 0;
+  height: auto;
+  text-transform: lowercase;
+}
+
+/* Tighter rows */
+html[data-restore-posts='on'] shreddit-feed > article {
+  padding: 4px 8px 4px 30px;
+}
+
+/* Sidebar media shrunk to text-scale */
+html[data-restore-layout='on'] .right-sidebar img,
+html[data-restore-layout='on'] aside.contents img {
+  max-width: 60px;
+  max-height: 40px;
+  object-fit: cover;
 }

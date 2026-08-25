@@ -19,6 +19,7 @@ export interface Toggles {
   userHighlight: boolean;
   quickCollapse: boolean;
   collapsePersist: boolean;
+  nightMode: boolean;
 }
 
 export const DEFAULT_TOGGLES: Toggles = {
@@ -36,6 +37,7 @@ export const DEFAULT_TOGGLES: Toggles = {
   userHighlight: true,
   quickCollapse: true,
   collapsePersist: true,
+  nightMode: true,
 };
 
 export async function getToggles(): Promise<Toggles> {

@@ -1,29 +1,37 @@
-/* REStore layout: centered fixed-width page, compact list, classic sidebar */
+/* REStore layout — old-Reddit page structure:
+   content columns centered on grey page, link list dominant, right sidebar. */
 
-html[data-restore-layout='on'] main,
-html[data-restore-layout='on'] shreddit-feed {
+html[data-restore-layout='on'] body {
+  display: block;
+}
+
+html[data-restore-layout='on'] main {
   max-width: var(--restore-content-width);
   margin: 0 auto;
   padding: 8px;
   background: var(--restore-page-bg);
 }
 
-/* Left column of post metadata (votes) like old Reddit's linkinfo table */
-html[data-restore-layout='on'] shreddit-post {
-  display: block;
+/* The link list: white column, 1px rounded border, ~5px row spacing */
+html[data-restore-layout='on'] shreddit-feed {
   background: var(--restore-bg);
   border: 1px solid var(--restore-border);
-  border-radius: 0;
-  margin: 0 0 4px 0;
-  padding: 4px 8px;
+  border-radius: 4px;
+  padding: 0;
 }
 
-/* Sidebar: narrow right rail */
+/* Right sidebar: stacked boxes with titles */
 html[data-restore-layout='on'] .right-sidebar,
-html[data-restore-layout='on'] aside.contents,
-html[data-restore-layout='on'] aside[data-testid='sidebar-container'] {
+html[data-restore-layout='on'] aside.contents {
   max-width: 300px;
+  background: transparent;
+}
+
+html[data-restore-layout='on'] .right-sidebar > *,
+html[data-restore-layout='on'] aside.contents > * {
   background: var(--restore-bg);
   border: 1px solid var(--restore-border);
-  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 10px;
 }

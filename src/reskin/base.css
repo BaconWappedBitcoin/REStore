@@ -1,34 +1,70 @@
-/* REStore base: old-Reddit palette and typography applied to sh.reddit.com */
+/* REStore base — old-Reddit faithful palettes.
+   Light = classic old.reddit.com, Dark = old.reddit + night mode (default).
+   Theme is set on <html data-restore-theme="light|dark">. */
 
 :root {
-  --restore-blue: #0000ff;
-  --restore-visited: #551a8b;
-  --restore-header-bg: #cee3f8;
+  --restore-content-width: 1000px;
+  --restore-font: Verdana, Arial, Helvetica, sans-serif;
+}
+
+/* ---- classic light palette ---- */
+html[data-restore-theme='light'] {
   --restore-bg: #ffffff;
-  --restore-page-bg: #f7f7f8;
+  --restore-page-bg: #f4f6f7;
+  --restore-header-bg: #ffffff;
+  --restore-header-border: #5f99cf;
+  --restore-subbar-bg: #cee3f8;
+  --restore-subbar-border: #5f99cf;
+  --restore-link: #0000ff;
+  --restore-link-visited: #551a8b;
+  --restore-meta: #888888;
   --restore-border: #e0e0e0;
-  --restore-meta: #888;
-  --restore-linkflair: #767676;
-  --restore-content-width: 950px;
+  --restore-row-alt: #f7f7f7;
+  --restore-score: #ff4500;
+  --restore-btn: #888;
+  --restore-tab-text: #336699;
+  --restore-tab-active: #ff4500;
+  --restore-text: #1a1a1b;
+  color-scheme: light;
+}
+
+/* ---- night palette (old.reddit + night mode, per user reference) ---- */
+html[data-restore-theme='dark'] {
+  --restore-bg: #1a1a1b;
+  --restore-page-bg: #0d0d0d;
+  --restore-header-bg: #1a1a1a;
+  --restore-header-border: #444444;
+  --restore-subbar-bg: #2d2d2d;
+  --restore-subbar-border: #444444;
+  --restore-link: #6299c6;
+  --restore-link-visited: #9e9e9e;
+  --restore-meta: #818384;
+  --restore-border: #343536;
+  --restore-row-alt: #222326;
+  --restore-score: #ff8b60;
+  --restore-btn: #818384;
+  --restore-tab-text: #c8cbcd;
+  --restore-tab-active: #ff4500;
+  --restore-text: #d7dadc;
+  color-scheme: dark;
 }
 
 html[data-restore-base='on'] {
   background: var(--restore-page-bg);
-  color: #1a1a1b;
-  font-family: -apple-system, "Segoe UI", Verdana, Arial, sans-serif;
-  font-size: 14px;
+  color: var(--restore-text);
+  font-family: var(--restore-font);
+  font-size: 12px;
 }
 
 html[data-restore-base='on'] a {
-  color: var(--restore-blue);
+  color: var(--restore-link);
 }
 
 html[data-restore-base='on'] a:visited {
-  color: var(--restore-visited);
+  color: var(--restore-link-visited);
 }
 
-/* Kill new-Reddit dark shell + custom subreddit theming that fights the classic look */
 html[data-restore-base='on'] body {
   background: var(--restore-page-bg) !important;
-  color-scheme: light;
+  color: var(--restore-text);
 }

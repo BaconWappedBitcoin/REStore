@@ -25,6 +25,7 @@ const TOGGLE_LABELS: Record<keyof Toggles, string> = {
   userHighlight: 'Highlight the OP in blue (and yourself in orange) in comments',
   quickCollapse: 'Click a comment\'s left gutter to collapse the thread',
   collapsePersist: 'Remember collapsed comment threads across visits',
+  nightMode: 'Night mode (dark classic theme — off = classic light)',
 };
 
 const FILTER_FIELDS: { key: keyof FilterSettings; label: string; placeholder: string }[] = [
