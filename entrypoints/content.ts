@@ -13,6 +13,7 @@ import { initLinkRewriter } from '../src/modules/linkRewriter';
 
 import '../src/reskin/base.css';
 import '../src/reskin/layout.css';
+import '../src/reskin/sidebar.css';
 import '../src/reskin/posts.css';
 import '../src/reskin/comments.css';
 import '../src/reskin/header.css';

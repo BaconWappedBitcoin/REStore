@@ -12,7 +12,7 @@ export default defineConfig({
     name: 'REStore',
     description:
       'Restores the old Reddit look on sh.reddit.com, and keeps you on sh.reddit.com only.',
-    version: '0.1.0',
+    version: '0.2.1',
     permissions: [
       'storage',
       // Chrome: network-level redirect of www/old/new reddit -> sh.reddit.com

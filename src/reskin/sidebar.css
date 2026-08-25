@@ -1,0 +1,89 @@
+/* Classic old-Reddit sidebar: everything inside .right-sidebar becomes
+   small-text boxes with compact link lists, regardless of which widgets
+   Reddit lazy-loads into them. */
+
+html[data-restore-layout='on'] .right-sidebar,
+html[data-restore-layout='on'] aside.contents {
+  font-size: 11px;
+}
+
+html[data-restore-layout='on'] .right-sidebar *,
+html[data-restore-layout='on'] aside.contents * {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* widget containers -> classic bordered boxes */
+html[data-restore-layout='on'] .right-sidebar aside > div,
+html[data-restore-layout='on'] .right-sidebar aside > faceplate-loader,
+html[data-restore-layout='on'] .right-sidebar-contents > * {
+  background: var(--restore-bg) !important;
+  border: 1px solid var(--restore-border);
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+/* widget titles: small bold blue like old reddit */
+html[data-restore-layout='on'] .right-sidebar h2,
+html[data-restore-layout='on'] .right-sidebar h3,
+html[data-restore-layout='on'] .right-sidebar [slot='title'],
+html[data-restore-layout='on'] aside.contents h2,
+html[data-restore-layout='on'] aside.contents h3 {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--restore-link);
+  margin: 0 0 6px 0;
+}
+
+/* links: compact single-line, classic blue */
+html[data-restore-layout='on'] .right-sidebar a,
+html[data-restore-layout='on'] aside.contents a {
+  color: var(--restore-link);
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* thumbnails shrink to inline chips */
+html[data-restore-layout='on'] .right-sidebar img,
+html[data-restore-layout='on'] .right-sidebar video,
+html[data-restore-layout='on'] aside.contents img {
+  max-width: 40px;
+  max-height: 30px;
+  object-fit: cover;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* buttons -> small bordered text buttons */
+html[data-restore-layout='on'] .right-sidebar button,
+html[data-restore-layout='on'] aside.contents button {
+  background: transparent !important;
+  border: 1px solid var(--restore-border);
+  color: var(--restore-btn) !important;
+  font-weight: 700;
+  text-transform: lowercase;
+  font-size: 10px;
+  border-radius: 3px;
+  padding: 2px 6px;
+}
+
+/* lists: tight, no bullets */
+html[data-restore-layout='on'] .right-sidebar ul,
+html[data-restore-layout='on'] .right-sidebar ol,
+html[data-restore-layout='on'] aside.contents ul {
+  margin: 0;
+  padding-left: 14px;
+  list-style: none;
+}
+html[data-restore-layout='on'] .right-sidebar li {
+  margin: 2px 0;
+}
+
+html[data-restore-layout='on'] .right-sidebar p,
+html[data-restore-layout='on'] .right-sidebar span {
+  color: var(--restore-text);
+}
