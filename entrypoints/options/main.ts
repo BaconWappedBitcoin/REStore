@@ -27,6 +27,7 @@ const TOGGLE_LABELS: Record<keyof Toggles, string> = {
   collapsePersist: 'Remember collapsed comment threads across visits',
   nightMode: 'Night mode (dark classic theme — off = classic light)',
   classicRows: 'Classic rows: render true old-Reddit post rows (rank, votes, thumbnail, buttons)',
+  classicChrome: 'Classic chrome: old-Reddit header bar, sort tabs, and left sidebar',
 };
 
 const FILTER_FIELDS: { key: keyof FilterSettings; label: string; placeholder: string }[] = [

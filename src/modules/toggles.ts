@@ -21,6 +21,7 @@ export interface Toggles {
   collapsePersist: boolean;
   nightMode: boolean;
   classicRows: boolean;
+  classicChrome: boolean;
 }
 
 export const DEFAULT_TOGGLES: Toggles = {
@@ -40,6 +41,7 @@ export const DEFAULT_TOGGLES: Toggles = {
   collapsePersist: true,
   nightMode: true,
   classicRows: true,
+  classicChrome: true,
 };
 
 export async function getToggles(): Promise<Toggles> {

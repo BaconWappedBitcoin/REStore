@@ -1,0 +1,97 @@
+/* chrome overlay — classic old-Reddit header + sort tabs + left sidebar */
+
+/* hide native header */
+html.restore-chrome-on header,
+html.restore-chrome-on reddit-header-large {
+  display: none !important;
+}
+
+/* classic top bar */
+#restore-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 3px 8px;
+  background: var(--restore-subbar-bg);
+  border-bottom: 1px solid var(--restore-subbar-border);
+  font-family: var(--restore-font);
+  font-size: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+#restore-logo {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--restore-link);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+#restore-search input {
+  font-size: 11px;
+  padding: 2px 6px;
+  width: 320px;
+  background: var(--restore-bg);
+  color: var(--restore-text);
+  border: 1px solid var(--restore-border);
+  border-radius: 2px;
+}
+#restore-user {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--restore-meta);
+}
+#restore-user a {
+  color: var(--restore-link);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* sort tabs above the list */
+#restore-tabs {
+  display: flex;
+  gap: 0;
+  padding: 4px 8px;
+  background: var(--restore-bg);
+  border: 1px solid var(--restore-border);
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  font-family: var(--restore-font);
+}
+#restore-tabs a {
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--restore-tab-text);
+  text-decoration: none;
+  padding: 2px 8px;
+  margin-right: 8px;
+  border-radius: 2px;
+}
+#restore-tabs a.active {
+  background: var(--restore-tab-active);
+  color: #fff;
+}
+#restore-tabs a:hover {
+  text-decoration: underline;
+}
+
+/* left sidebar like old Reddit. Actual shreddit layout (verified):
+   div.main-container > [ main.main, div.right-sidebar, aside.contents ] */
+html.restore-chrome-on .main-container {
+  display: flex !important;
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-start;
+  grid-template-columns: none !important;
+}
+html.restore-chrome-on .main-container > .right-sidebar,
+html.restore-chrome-on .main-container > aside.contents {
+  order: -1;
+  flex: none;
+  display: block;
+}
+html.restore-chrome-on .main-container > main {
+  order: 0;
+  flex: 1;
+  min-width: 0;
+}
