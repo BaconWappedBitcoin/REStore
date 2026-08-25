@@ -1,0 +1,19 @@
+{
+  "name": "restore",
+  "description": "REStore — restores the old Reddit look on sh.reddit.com. Never uses www.reddit.com.",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "compile": "tsc --noEmit"
+  },
+  "dependencies": {
+    "wxt": "^0.20.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}

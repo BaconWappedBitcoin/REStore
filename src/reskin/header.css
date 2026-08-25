@@ -1,0 +1,22 @@
+/* REStore header: old-style blue top bar with subreddit bar */
+
+html[data-restore-header='on'] reddit-header,
+html[data-restore-header='on'] faceplate-header,
+html[data-restore-header='on'] header {
+  background: var(--restore-header-bg) !important;
+  border-bottom: 1px solid #afcae1;
+}
+
+html[data-restore-header='on'] reddit-header a,
+html[data-restore-header='on'] faceplate-header a,
+html[data-restore-header='on'] header a {
+  color: #369;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+/* Logo + "REStore active" indicator */
+html[data-restore-header='on'] header nav {
+  max-width: var(--restore-content-width);
+  margin: 0 auto;
+}

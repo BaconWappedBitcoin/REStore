@@ -1,0 +1,28 @@
+/* REStore layout: centered fixed-width page, compact list, classic sidebar */
+
+html[data-restore-layout='on'] main,
+html[data-restore-layout='on'] shreddit-feed {
+  max-width: var(--restore-content-width);
+  margin: 0 auto;
+  padding: 8px;
+  background: var(--restore-page-bg);
+}
+
+/* Left column of post metadata (votes) like old Reddit's linkinfo table */
+html[data-restore-layout='on'] shreddit-post {
+  display: block;
+  background: var(--restore-bg);
+  border: 1px solid var(--restore-border);
+  border-radius: 0;
+  margin: 0 0 4px 0;
+  padding: 4px 8px;
+}
+
+/* Sidebar: narrow right rail */
+html[data-restore-layout='on'] aside,
+html[data-restore-layout='on'] [data-testid='sidebar-container'] {
+  max-width: 300px;
+  background: var(--restore-bg);
+  border: 1px solid var(--restore-border);
+  padding: 8px;
+}

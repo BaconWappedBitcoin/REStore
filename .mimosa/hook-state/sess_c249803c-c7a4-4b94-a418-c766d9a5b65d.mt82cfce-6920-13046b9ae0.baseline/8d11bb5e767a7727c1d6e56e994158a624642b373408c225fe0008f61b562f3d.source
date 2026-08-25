@@ -1,0 +1,37 @@
+import { defineBackground } from 'wxt/utils/background';
+import { getToggles } from '@/modules/toggles';
+import { toShReddit, dnrRules } from '@/modules/redirect';
+
+const DNR_RULE_IDS = [1001, 1002, 1003];
+
+async function syncRedirectRules(enabled: boolean) {
+  if (typeof chrome !== 'undefined' && chrome.declarativeNetRequest?.updateDynamicRules) {
+    // Chrome (and Firefox 113+ which also supports DNR — used when available)
+    await chrome.declarativeNetRequest.updateDynamicRules({
+      removeRuleIds: DNR_RULE_IDS,
+      addRules: enabled ? dnrRules(DNR_RULE_IDS) : [],
+    });
+  }
+}
+
+export default defineBackground(() => {
+  void getToggles().then((t) => syncRedirectRules(t.redirect));
+
+  browser.storage.onChanged.addListener((changes, area) => {
+    if (area === 'sync' && 'redirect' in changes) {
+      void syncRedirectRules(changes.redirect.newValue as boolean);
+    }
+  });
+
+  // Firefox fallback: block-and-redirect via webRequestBlocking when DNR is absent
+  if (typeof browser !== 'undefined' && browser.webRequest && !chrome.declarativeNetRequest) {
+    browser.webRequest.onBeforeRequest.addListener(
+      (details: { url: string }) => {
+        const target = toShReddit(details.url);
+        return target ? { redirectUrl: target } : {};
+      },
+      { urls: ['*://www.reddit.com/*', '*://new.reddit.com/*', '*://old.reddit.com/*'] },
+      ['blocking'],
+    );
+  }
+});

@@ -1,0 +1,34 @@
+/* REStore base: old-Reddit palette and typography applied to sh.reddit.com */
+
+:root {
+  --restore-blue: #0000ff;
+  --restore-visited: #551a8b;
+  --restore-header-bg: #cee3f8;
+  --restore-bg: #ffffff;
+  --restore-page-bg: #f7f7f8;
+  --restore-border: #e0e0e0;
+  --restore-meta: #888;
+  --restore-linkflair: #767676;
+  --restore-content-width: 950px;
+}
+
+html[data-restore-base='on'] {
+  background: var(--restore-page-bg);
+  color: #1a1a1b;
+  font-family: -apple-system, "Segoe UI", Verdana, Arial, sans-serif;
+  font-size: 14px;
+}
+
+html[data-restore-base='on'] a {
+  color: var(--restore-blue);
+}
+
+html[data-restore-base='on'] a:visited {
+  color: var(--restore-visited);
+}
+
+/* Kill new-Reddit dark shell + custom subreddit theming that fights the classic look */
+html[data-restore-base='on'] body {
+  background: var(--restore-page-bg) !important;
+  color-scheme: light;
+}

@@ -1,0 +1,37 @@
+/* REStore posts: classic compact post rows (rank/votes/thumbnail/title/meta) */
+
+html[data-restore-posts='on'] shreddit-post h1,
+html[data-restore-posts='on'] shreddit-post [slot='title'] a,
+html[data-restore-posts='on'] shreddit-post a[slot='full-post-link'],
+html[data-restore-posts='on'] shreddit-post a[data-testid='post-title'] {
+  font-size: 16px;
+  font-weight: normal;
+  color: var(--restore-blue);
+}
+
+html[data-restore-posts='on'] shreddit-post a[data-testid='post-title']:visited {
+  color: var(--restore-visited);
+}
+
+/* Meta line: submitted by X in Y • N comments — smaller, grey */
+html[data-restore-posts='on'] shreddit-post [data-testid='post-meta'],
+html[data-restore-posts='on'] shreddit-post div:has(> a[href^='/user/']) {
+  font-size: 11px;
+  color: var(--restore-meta);
+}
+
+/* Classic blue vote score */
+html[data-restore-posts='on'] shreddit-post [data-testid='post-score'],
+html[data-restore-posts='on'] shreddit-post faceplate-number {
+  font-size: 12px;
+  font-weight: bold;
+  color: #ff4500;
+}
+
+/* Compact media inside the list */
+html[data-restore-posts='on'] shreddit-post img,
+html[data-restore-posts='on'] shreddit-post video {
+  max-height: 320px;
+  width: auto;
+  max-width: 100%;
+}

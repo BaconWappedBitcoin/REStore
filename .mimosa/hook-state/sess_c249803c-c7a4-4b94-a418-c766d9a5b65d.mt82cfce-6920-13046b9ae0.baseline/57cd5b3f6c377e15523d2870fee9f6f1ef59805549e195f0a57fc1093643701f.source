@@ -1,0 +1,28 @@
+import { DEFAULT_TOGGLES, getToggles, setToggle, type Toggles } from '@/modules/toggles';
+
+const LABELS: Record<keyof Toggles, string> = {
+  redirect: 'Always redirect www/new/old.reddit.com to sh.reddit.com',
+  reskinBase: 'Old-Reddit colors and typography',
+  reskinLayout: 'Centered fixed-width layout with compact list',
+  reskinPosts: 'Classic post rows (title, meta, vote score)',
+  reskinComments: 'Classic threaded comments with indent lines',
+  reskinHeader: 'Old-style blue header bar',
+  hideClutter: 'Hide promoted posts, upsells, and chat widget',
+};
+
+async function render() {
+  const toggles = await getToggles();
+  const container = document.getElementById('toggles')!;
+  container.innerHTML = '';
+  for (const key of Object.keys(DEFAULT_TOGGLES) as (keyof Toggles)[]) {
+    const label = document.createElement('label');
+    const box = document.createElement('input');
+    box.type = 'checkbox';
+    box.checked = toggles[key];
+    box.addEventListener('change', () => void setToggle(key, box.checked));
+    label.append(box, ' ', LABELS[key]);
+    container.append(label);
+  }
+}
+
+void render();

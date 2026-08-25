@@ -1,0 +1,10 @@
+/* REStore clutter hiding: promoted posts, upsells, chat */
+
+html.restore-clutter-hidden [data-testid='promoted-post'],
+html.restore-clutter-hidden shreddit-post[promoted='true'],
+html.restore-clutter-hidden #chat,
+html.restore-clutter-hidden [data-testid='chat-widget'],
+html.restore-clutter-hidden [data-testid='upsell'],
+html.restore-clutter-hidden faceplate-banner {
+  display: none !important;
+}

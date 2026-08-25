@@ -1,0 +1,42 @@
+/**
+ * Redirects www/new/old.reddit.com -> sh.reddit.com, preserving path + query.
+ *
+ * - Chrome: declarativeNetRequest dynamic rules (registered in background.ts).
+ * - Firefox: webRequestBlocking listener (registered in background.ts),
+ *   because AMO's review is friendlier to that than DNR with host permissions.
+ * - Loop guard: Reddit 301s some logged-out visitors from sh.reddit.com to
+ *   www server-side. To avoid ping-ponging, the background only rewrites
+ *   www->sh when this session has already seen a successful sh.reddit.com
+ *   load (tracked via a session flag the sh content script sets).
+ */
+
+const OTHER_HOSTS = ['www.reddit.com', 'new.reddit.com', 'old.reddit.com'];
+
+export function toShReddit(url: string): string | null {
+  try {
+    const u = new URL(url);
+    if (u.protocol !== 'https:' && u.protocol !== 'http:') return null;
+    if (!OTHER_HOSTS.includes(u.hostname)) return null;
+    u.hostname = 'sh.reddit.com';
+    u.protocol = 'https:';
+    return u.toString();
+  } catch {
+    return null;
+  }
+}
+
+/** DNR rule specs for Chrome. */
+export function dnrRules(ruleIds: number[]): chrome.declarativeNetRequest.Rule[] {
+  return OTHER_HOSTS.map((host, i) => ({
+    id: ruleIds[i],
+    priority: 1,
+    action: {
+      type: 'redirect' as const,
+      transform: { host: 'sh.reddit.com', scheme: 'https' },
+    },
+    condition: {
+      requestDomains: [host],
+      resourceTypes: ['main_frame'] as chrome.declarativeNetRequest.ResourceType[],
+    },
+  }));
+}
