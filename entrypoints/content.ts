@@ -9,6 +9,7 @@ import { initAutoHide, watchReads } from '../src/modules/autoHide';
 import { initCommentFeatures } from '../src/modules/comments';
 import { initClassicRows } from '../src/modules/classicRows';
 import { initChrome } from '../src/modules/chrome';
+import { initLinkRewriter } from '../src/modules/linkRewriter';
 
 import '../src/reskin/base.css';
 import '../src/reskin/layout.css';
@@ -48,6 +49,7 @@ export default defineContentScript({
   main() {
     markShVisit();
     watchReads();
+    initLinkRewriter();
     void getToggles().then(apply);
 
     // Live re-apply when toggles change in the options page
