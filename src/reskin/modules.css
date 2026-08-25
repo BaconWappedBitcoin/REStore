@@ -1,0 +1,40 @@
+/* REStore module styles: keyboard selection, filter/autoHide, page navigator */
+
+/* selectedEntry — RES-style selection outline on the keyboard-selected post */
+.restore-selected {
+  outline: 2px solid #5f99cf !important;
+  outline-offset: -2px;
+  background: #f4f8fc !important;
+}
+
+/* Posts hidden by filters or autoHide */
+.restore-filtered,
+.restore-read-hidden {
+  display: none !important;
+}
+
+/* pageNavigator */
+#restore-pagenav {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2147483646;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+#restore-pagenav button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #afcae1;
+  border-radius: 3px;
+  background: #cee3f8;
+  color: #369;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+#restore-pagenav button:hover {
+  background: #f4f8fc;
+}

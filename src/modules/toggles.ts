@@ -12,6 +12,10 @@ export interface Toggles {
   reskinComments: boolean;
   reskinHeader: boolean;
   hideClutter: boolean;
+  filterReddit: boolean;
+  keyboardNav: boolean;
+  pageNavigator: boolean;
+  autoHide: boolean;
 }
 
 export const DEFAULT_TOGGLES: Toggles = {
@@ -22,6 +26,10 @@ export const DEFAULT_TOGGLES: Toggles = {
   reskinComments: true,
   reskinHeader: true,
   hideClutter: true,
+  filterReddit: true,
+  keyboardNav: true,
+  pageNavigator: true,
+  autoHide: true,
 };
 
 export async function getToggles(): Promise<Toggles> {

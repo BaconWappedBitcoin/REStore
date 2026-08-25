@@ -2,6 +2,10 @@ import { defineContentScript } from 'wxt/utils/define-content-script';
 import { getToggles, type Toggles } from '../src/modules/toggles';
 import { assertSelectors } from '../src/selectors';
 import { applyDomTweaks, markShVisit } from '../src/modules/domtweaks';
+import { initFilters } from '../src/modules/filters';
+import { initKeyboardNav } from '../src/modules/keyboardNav';
+import { initPageNavigator } from '../src/modules/pageNavigator';
+import { initAutoHide, watchReads } from '../src/modules/autoHide';
 
 import '../src/reskin/base.css';
 import '../src/reskin/layout.css';
@@ -9,6 +13,7 @@ import '../src/reskin/posts.css';
 import '../src/reskin/comments.css';
 import '../src/reskin/header.css';
 import '../src/reskin/clutter.css';
+import '../src/reskin/modules.css';
 
 function apply(t: Toggles) {
   const root = document.documentElement;
@@ -18,6 +23,10 @@ function apply(t: Toggles) {
   root.dataset.restoreComments = t.reskinComments ? 'on' : 'off';
   root.dataset.restoreHeader = t.reskinHeader ? 'on' : 'off';
   applyDomTweaks(t.hideClutter);
+  initFilters(t.filterReddit);
+  initKeyboardNav(t.keyboardNav);
+  initPageNavigator(t.pageNavigator);
+  initAutoHide(t.autoHide);
 }
 
 export default defineContentScript({
@@ -25,6 +34,7 @@ export default defineContentScript({
   runAt: 'document_start',
   main() {
     markShVisit();
+    watchReads();
     void getToggles().then(apply);
 
     // Live re-apply when toggles change in the options page
