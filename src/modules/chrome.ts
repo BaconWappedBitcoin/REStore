@@ -5,6 +5,8 @@
  * The native header stays in the DOM (hidden) so Reddit's own JS keeps working.
  */
 
+import { onFeedScan } from './feed';
+
 const BAR_ID = 'restore-header';
 const TABS_ID = 'restore-tabs';
 
@@ -94,25 +96,25 @@ function buildTabs(): HTMLElement {
   return tabs;
 }
 
+let chromeObserver: (() => void) | null = null;
+
 export function initChrome(enabled: boolean): void {
   document.documentElement.classList.toggle('restore-chrome-on', enabled);
   document.getElementById(BAR_ID)?.remove();
   document.getElementById(TABS_ID)?.remove();
+  chromeObserver?.();
+  chromeObserver = null;
   if (!enabled) return;
 
-  const mount = () => {
-    if (!document.getElementById(BAR_ID)) {
+  // Mount + re-mount: shreddit replaces the feed on SPA navigation, so we
+  // re-check on every feed scan (cheap, idempotent).
+  chromeObserver = onFeedScan(() => {
+    if (document.body && !document.getElementById(BAR_ID)) {
       document.body.prepend(buildHeader());
     }
     const feed = document.querySelector('shreddit-feed');
     if (feed && !document.getElementById(TABS_ID)) {
       feed.parentElement?.insertBefore(buildTabs(), feed);
     }
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mount, { once: true });
-  } else {
-    mount();
-    setTimeout(mount, 1200); // SPA renders late
-  }
+  });
 }

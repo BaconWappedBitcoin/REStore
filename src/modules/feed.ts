@@ -97,22 +97,27 @@ export function extractMeta(article: HTMLElement): PostMeta {
 type Listener = (articles: HTMLElement[]) => void;
 const listeners = new Set<Listener>();
 let observer: MutationObserver | null = null;
+let notifyQueued = false;
 
 function notifyNew() {
-  const arts = getArticles();
-  for (const l of listeners) l(arts);
+  if (notifyQueued) return;
+  notifyQueued = true;
+  requestAnimationFrame(() => {
+    notifyQueued = false;
+    const arts = getArticles();
+    for (const l of listeners) l(arts);
+  });
 }
 
-/** Subscribe to (re)scans of the feed: initial call + every mutation batch. */
+/** Subscribe to (re)scans of the feed: initial call + every mutation batch.
+ *  Observes document.body — shreddit REPLACES <shreddit-feed> on SPA
+ *  navigation, so observing the feed element itself goes blind after nav. */
 export function onFeedScan(listener: Listener): () => void {
   listeners.add(listener);
   listener(getArticles());
   if (!observer) {
     observer = new MutationObserver(() => notifyNew());
-    const start = () => {
-      const target = document.querySelector('shreddit-feed') ?? document.body;
-      observer!.observe(target, { childList: true, subtree: true });
-    };
+    const start = () => observer!.observe(document.body, { childList: true, subtree: true });
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', start, { once: true });
     } else {
