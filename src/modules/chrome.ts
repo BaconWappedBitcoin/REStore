@@ -36,8 +36,23 @@ function buildHeader(): HTMLElement {
 
   const logo = document.createElement('a');
   logo.id = 'restore-logo';
-  logo.href = '/';
+  logo.href = 'https://sh.reddit.com/';
   logo.textContent = 'reddit';
+
+  const home = document.createElement('a');
+  home.className = 'restore-navlink';
+  home.href = 'https://sh.reddit.com/';
+  home.textContent = 'HOME';
+
+  const popular = document.createElement('a');
+  popular.className = 'restore-navlink';
+  popular.href = 'https://sh.reddit.com/r/popular/';
+  popular.textContent = 'POPULAR';
+
+  const all = document.createElement('a');
+  all.className = 'restore-navlink';
+  all.href = 'https://sh.reddit.com/r/all/';
+  all.textContent = 'ALL';
 
   const search = document.createElement('form');
   search.id = 'restore-search';
@@ -59,7 +74,7 @@ function buildHeader(): HTMLElement {
     user.appendChild(a);
   }
 
-  bar.append(logo, search, user);
+  bar.append(logo, home, popular, all, search, user);
   return bar;
 }
 

@@ -26,6 +26,17 @@ html.restore-chrome-on reddit-header-large {
   color: var(--restore-link);
   text-decoration: none;
   letter-spacing: -0.5px;
+  margin-right: 10px;
+}
+#restore-header .restore-navlink {
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--restore-tab-text);
+  text-decoration: none;
+  margin-right: 10px;
+}
+#restore-header .restore-navlink:hover {
+  text-decoration: underline;
 }
 #restore-search input {
   font-size: 11px;
@@ -75,23 +86,14 @@ html.restore-chrome-on reddit-header-large {
   text-decoration: underline;
 }
 
-/* left sidebar like old Reddit. Actual shreddit layout (verified):
-   div.main-container > [ main.main, div.right-sidebar, aside.contents ] */
+/* Content left-justified like old Reddit (no centering), sidebar stays right */
 html.restore-chrome-on .main-container {
-  display: flex !important;
-  flex-direction: row;
-  gap: 10px;
-  align-items: flex-start;
-  grid-template-columns: none !important;
-}
-html.restore-chrome-on .main-container > .right-sidebar,
-html.restore-chrome-on .main-container > aside.contents {
-  order: -1;
-  flex: none;
-  display: block;
+  margin: 0 !important;
+  max-width: 1050px;
 }
 html.restore-chrome-on .main-container > main {
-  order: 0;
   flex: 1;
   min-width: 0;
+  margin: 0;
+  padding-left: 8px;
 }
