@@ -52,7 +52,20 @@ export function extractMeta(article: HTMLElement): PostMeta {
   );
   const title = titleEl?.textContent?.trim() ?? '';
 
-  let linkUrl = titleEl?.href ?? '';
+  // Use the raw attribute and rebase on sh.reddit.com — .href would
+  // absolutize to whatever host the page rendered (often www).
+  let linkUrl = '';
+  const rawHref = titleEl?.getAttribute('href') ?? '';
+  if (rawHref) {
+    try {
+      linkUrl = new URL(rawHref, 'https://sh.reddit.com').toString();
+      if (linkUrl.includes('//www.reddit.com') || linkUrl.includes('//new.reddit.com')) {
+        linkUrl = linkUrl.replace(/\/\/(www|new)\.reddit\.com/, '//sh.reddit.com');
+      }
+    } catch {
+      linkUrl = rawHref;
+    }
+  }
   let domain = '';
   try {
     if (linkUrl) domain = new URL(linkUrl).hostname.replace(/^www\./, '').toLowerCase();
