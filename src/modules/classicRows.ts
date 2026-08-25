@@ -32,6 +32,24 @@ function nativeVoteButtons(article: HTMLElement): HTMLButtonElement[] {
   return [...sr.querySelectorAll('button')].slice(0, 2) as HTMLButtonElement[];
 }
 
+/** Reads native vote state and reflects it on our arrows + score. */
+function syncVoteUi(article: HTMLElement): void {
+  const row = article.querySelector(':scope > .restore-row');
+  if (!row) return;
+  const [up, down] = nativeVoteButtons(article);
+  const upVoted = up?.getAttribute('aria-pressed') === 'true';
+  const downVoted = down?.getAttribute('aria-pressed') === 'true';
+  row.querySelector('.restore-up')?.classList.toggle('voted', upVoted);
+  row.querySelector('.restore-down')?.classList.toggle('voted', downVoted);
+  const scoreEl = row.querySelector('.restore-score');
+  if (scoreEl && scoreEl.dataset.base) {
+    const base = Number(scoreEl.dataset.base);
+    if (Number.isFinite(base)) {
+      scoreEl.textContent = String(base + (upVoted ? 1 : 0) - (downVoted ? 1 : 0));
+    }
+  }
+}
+
 function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
   cls?: string,
@@ -62,11 +80,18 @@ function renderRow(article: HTMLElement): void {
   up.type = 'button';
   up.title = 'upvote';
   const score = el('span', 'restore-score', Number.isFinite(m.score) ? String(m.score) : '•');
+  if (Number.isFinite(m.score)) score.dataset.base = String(m.score);
   const down = el('button', 'restore-arrow restore-down', '▼');
   down.type = 'button';
   down.title = 'downvote';
-  up.addEventListener('click', () => nativeVoteButtons(article)[0]?.click());
-  down.addEventListener('click', () => nativeVoteButtons(article)[1]?.click());
+  up.addEventListener('click', () => {
+    nativeVoteButtons(article)[0]?.click();
+    setTimeout(() => syncVoteUi(article), 400);
+  });
+  down.addEventListener('click', () => {
+    nativeVoteButtons(article)[1]?.click();
+    setTimeout(() => syncVoteUi(article), 400);
+  });
   votes.append(up, score, down);
 
   // thumbnail
@@ -139,6 +164,9 @@ export function initClassicRows(enabled: boolean): void {
     return;
   }
   onFeedScan((articles) => {
-    for (const a of articles) renderRow(a);
+    for (const a of articles) {
+      renderRow(a);
+      syncVoteUi(a);
+    }
   });
 }

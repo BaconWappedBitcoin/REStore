@@ -48,6 +48,18 @@ html.restore-classic-on shreddit-feed > article .restore-rank::before {
   font-size: 14px;
   line-height: 1;
   padding: 1px 0;
+  opacity: 0.45;
+}
+/* voted state: full color like old Reddit's filled arrows */
+.restore-row .restore-up.voted {
+  color: #ff4500;
+  opacity: 1;
+  text-shadow: 0 0 1px #ff4500;
+}
+.restore-row .restore-down.voted {
+  color: #7193ff;
+  opacity: 1;
+  text-shadow: 0 0 1px #7193ff;
 }
 .restore-row .restore-up { color: #ff4500; }
 .restore-row .restore-down { color: #7193ff; }
